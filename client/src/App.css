@@ -24,6 +24,19 @@
   color: white;
 }
 
+/* Added this to structure my page accordingly*/
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
 .App-link {
   color: #61dafb;
 }

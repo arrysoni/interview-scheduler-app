@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CandidateDashboard = () => {
   const navigate = useNavigate();
+  const [interviewSlot, setInterviewSlot] = useState(null);
+
+  useEffect(() => {
+    const savedSlot = localStorage.getItem("interviewSlot");
+    if (savedSlot) {
+      setInterviewSlot(savedSlot);
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("interviewSlot");
     navigate("/login");
   };
 
@@ -19,12 +28,18 @@ const CandidateDashboard = () => {
 
       <div style={styles.card}>
         <h4>Upcoming Interview</h4>
-        <p>No interviews scheduled yet.</p>
+        {interviewSlot ? (
+          <p>{interviewSlot}</p>
+        ) : (
+          <p>No interviews scheduled yet.</p>
+        )}
       </div>
 
-      <button style={styles.primaryBtn} onClick={goToSlotBooking}>
-        Book an Interview Slot
-      </button>
+      {!interviewSlot && (
+        <button style={styles.primaryBtn} onClick={goToSlotBooking}>
+          Book an Interview Slot
+        </button>
+      )}
 
       <button style={styles.logoutBtn} onClick={handleLogout}>
         Logout
@@ -35,27 +50,32 @@ const CandidateDashboard = () => {
 
 const styles = {
   container: {
-    maxWidth: "600px",
-    margin: "2rem auto",
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     padding: "2rem",
-    fontFamily: "sans-serif",
-    backgroundColor: "#f2f2f2",
-    borderRadius: "8px",
+    background: "linear-gradient(to right, #f6d365, #fda085)",
+    color: "#333",
   },
   card: {
-    padding: "1rem",
     backgroundColor: "#fff",
-    marginBottom: "1rem",
-    borderRadius: "6px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    padding: "1.5rem 2rem",
+    borderRadius: "12px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+    marginBottom: "1.5rem",
+    width: "100%",
+    maxWidth: "400px",
+    textAlign: "center",
   },
   primaryBtn: {
     backgroundColor: "#1976D2",
     color: "#fff",
     border: "none",
-    padding: "0.75rem 1rem",
+    padding: "0.75rem 1.25rem",
     fontSize: "1rem",
-    borderRadius: "4px",
+    borderRadius: "6px",
     cursor: "pointer",
     marginRight: "1rem",
   },
@@ -63,11 +83,12 @@ const styles = {
     backgroundColor: "#f44336",
     color: "#fff",
     border: "none",
-    padding: "0.75rem 1rem",
+    padding: "0.75rem 1.25rem",
     fontSize: "1rem",
-    borderRadius: "4px",
+    borderRadius: "6px",
     cursor: "pointer",
   },
 };
+
 
 export default CandidateDashboard;

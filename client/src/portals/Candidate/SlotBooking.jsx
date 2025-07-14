@@ -61,34 +61,44 @@ const SlotBooking = () => {
 
 const styles = {
   container: {
-    maxWidth: "600px",
-    margin: "2rem auto",
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     padding: "2rem",
-    fontFamily: "sans-serif",
-    backgroundColor: "#f2f2f2",
-    borderRadius: "8px",
+    background: "linear-gradient(to right, #667eea, #764ba2)",
+    color: "#fff",
   },
   slotList: {
     listStyle: "none",
     padding: 0,
+    marginBottom: "1rem",
+    width: "100%",
+    maxWidth: "400px",
   },
   slotItem: {
     padding: "1rem",
     marginBottom: "0.5rem",
-    border: "1px solid #ccc",
+    backgroundColor: "#fff",
+    color: "#333",
     borderRadius: "6px",
+    border: "none",
     cursor: "pointer",
+    textAlign: "center",
+    fontWeight: "500",
+    transition: "background-color 0.2s",
   },
   button: {
-    padding: "0.75rem 1rem",
-    backgroundColor: "#4CAF50",
+    padding: "0.75rem 1.5rem",
+    backgroundColor: "#28a745",
     color: "#fff",
     fontSize: "1rem",
     border: "none",
-    borderRadius: "4px",
-    marginTop: "1rem",
+    borderRadius: "6px",
     cursor: "pointer",
   },
 };
+
 
 export default SlotBooking;
