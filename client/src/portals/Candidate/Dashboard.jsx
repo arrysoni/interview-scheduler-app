@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CandidateDashboard = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const [interviewSlot, setInterviewSlot] = useState(null);
+  const [approvalStatus, setApprovalStatus] = useState("pending");
 
   useEffect(() => {
     const savedSlot = localStorage.getItem("interviewSlot");
-    if (savedSlot) {
-      setInterviewSlot(savedSlot);
-    }
+    const status = localStorage.getItem("approvalStatus");
+
+    if (savedSlot) setInterviewSlot(savedSlot);
+    if (status) setApprovalStatus(status);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("interviewSlot");
+    localStorage.removeItem("approvalStatus");
     navigate("/login");
   };
 
@@ -27,15 +30,19 @@ const CandidateDashboard = () => {
       <h2>Welcome to Your Dashboard 🎉</h2>
 
       <div style={styles.card}>
-        <h4>Upcoming Interview</h4>
+        <h4>Interview Status</h4>
         {interviewSlot ? (
-          <p>{interviewSlot}</p>
+          <p><strong>Slot Booked:</strong> {interviewSlot}</p>
+        ) : approvalStatus === "approved" ? (
+          <p>You’ve been approved by HR! 🎯</p>
+        ) : approvalStatus === "rejected" ? (
+          <p style={{ color: "red" }}>Unfortunately, your application was not accepted.</p>
         ) : (
-          <p>No interviews scheduled yet.</p>
+          <p>Your application is under review by HR.</p>
         )}
       </div>
 
-      {!interviewSlot && (
+      {!interviewSlot && approvalStatus === "approved" && (
         <button style={styles.primaryBtn} onClick={goToSlotBooking}>
           Book an Interview Slot
         </button>
@@ -47,6 +54,8 @@ const CandidateDashboard = () => {
     </div>
   );
 };
+
+ 
 
 const styles = {
   container: {
@@ -91,4 +100,4 @@ const styles = {
 };
 
 
-export default CandidateDashboard;
+export default Dashboard;

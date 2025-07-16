@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const dummySlots = [
@@ -13,6 +13,14 @@ const SlotBooking = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
+  useEffect(() => {
+    const approvalStatus = localStorage.getItem("approvalStatus"); // <- Check here
+    if (approvalStatus !== "approved") {
+      alert("Access denied: Awaiting HR approval.");
+      navigate("/candidate/dashboard");
+    }
+  }, [navigate]);
+  
   const handleSlotSelect = (slot) => {
     setSelectedSlot(slot);
     setConfirmationMessage("");
@@ -24,9 +32,7 @@ const SlotBooking = () => {
       return;
     }
 
-    // Store slot in localStorage (replace with API call later)
     localStorage.setItem("interviewSlot", selectedSlot);
-
     setConfirmationMessage("Slot booked successfully! 🎉");
 
     setTimeout(() => {
@@ -99,6 +105,5 @@ const styles = {
     cursor: "pointer",
   },
 };
-
 
 export default SlotBooking;
