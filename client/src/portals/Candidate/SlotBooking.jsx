@@ -31,14 +31,24 @@ const SlotBooking = () => {
       setConfirmationMessage("Please select a time slot.");
       return;
     }
-
+  
+    // Store candidate's slot (for personal dashboard)
     localStorage.setItem("interviewSlot", selectedSlot);
+  
+    // 👉 Add to global interview slots for HR to see
+    const allSlots = JSON.parse(localStorage.getItem("allInterviewSlots")) || [];
+    const candidateName = localStorage.getItem("candidateName") || "Anonymous";
+    allSlots.push({ candidateName, slot: selectedSlot });
+    localStorage.setItem("allInterviewSlots", JSON.stringify(allSlots));
+  
+    // Set confirmation message and redirect
     setConfirmationMessage("Slot booked successfully! 🎉");
-
+  
     setTimeout(() => {
       navigate("/candidate/dashboard");
     }, 1500);
   };
+  
 
   return (
     <div style={styles.container}>

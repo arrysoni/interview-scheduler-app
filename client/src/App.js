@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import InterviewFeedback from "./portals/HR/InterviewFeedback"; 
 
 // Candidate Portal
 import CandidateDashboard from "./portals/Candidate/Dashboard";
@@ -32,6 +33,9 @@ const App = () => {
 
         {/* Admin Portal */}
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+         {/* HR Portal */}
+        <Route path="/hr/feedback" element={<InterviewFeedback />} />
       </Routes>
     </Router>
   );
